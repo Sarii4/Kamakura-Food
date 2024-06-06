@@ -1,5 +1,5 @@
 //DEBE contener las funcionalidades del carrito de compras.
-import { products } from "../assets/data/data.js";
+//import { products } from "../assets/data/data.js";
 
 
 let cart = [];
