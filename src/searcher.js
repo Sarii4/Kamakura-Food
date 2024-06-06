@@ -1,8 +1,10 @@
 //DEBE buscar los productos por los filtros
 
 
+
+
 // buscar productos por filtro
-export function searchProductsByFilter(products, filter) {
+function searchProductsByFilter(products, filter) {
     // Si el filtro es "todos", retornar todos los productos
     if (filter === 'todos') {
         return products;
@@ -10,9 +12,7 @@ export function searchProductsByFilter(products, filter) {
     
 // filtrar productos por categoría
     return products.filter(product => product.category === filter);
-}
+};
 
 
-
-
-
+export { searchProductsByFilter };

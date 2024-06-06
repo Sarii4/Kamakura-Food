@@ -1,74 +1,59 @@
+import { filters } from '../assets/data/data.js';
+import { products } from '../assets/data/data.js';
+import { searchProductsByFilter } from '../src/searcher.js';
+
+
+
+/*
+document.getElementById("filters").innerHTML = filters.map(showFilter);
+function showFilter(item) {
+  return [item].join(" ");
+}
+
+*/
 //DEBE imprimir en pantalla la información de filtros.
+
+document.getElementById("filters").innerHTML = filters.map(showFilter).join("");
+
+function showFilter(item) {
+  return `<button class= "filter">${item}</button>`;}
+
+
 
 //DEBE imprimir en pantalla los productos, con su Título, descripción y precio en € y botón de añadir.
 
-//DEBE imprimir en pantalla la información de filtros.
-import { filters } from '../data.js';
-import { products } from '../data.js';
-import { searchProductsByFilter } from './searcher.js';
-
-
-/* Función para filtrar los productos por categoría */
-function filterProductsByCategory(products, category) {
-    const filteredProducts = products.filter(product => product.category === category);
-    console.log(`Productos filtrados por la categoría ${category}:`, filteredProducts);
-    return filteredProducts;
+  // Función para mostrar los productos en pantalla
+function showProducts(products) {
+    const productsContainer = document.getElementById("products");
+    productsContainer.innerHTML = products.map(showProduct).join("");
 }
 
-/* Función para mostrar los filtros en pantalla */
-function mostrarFiltros() {
-    const filtros = document.querySelectorAll('.filter'); /* Seleccionar todos los botones de filtro en el DOM */
-    filtros.forEach(boton => {
-        boton.addEventListener('click', () => { /* listener para manejar el clic en el filtro */
-            const filtroSeleccionado = boton.textContent; /* Obtener el texto del botón como filtro */
-            console.log('Filtro seleccionado:', filtroSeleccionado);
-
-            /* Filtrar los productos por la categoría seleccionada */
-            mostrarProductosFiltrados(filtroSeleccionado); /* Llamar a la función para mostrar productos filtrados */
-        });
-    });
+// Función para mostrar un producto individual en una cuadrícula
+function showProduct(product) {
+    return `
+        <div class="product-container">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <div class="price-container">
+            <p><b> ${product.price} €</b></p>
+            <button class="add-button" data-id="${product.id}">Añadir</button>
+            </div>
+        </div>
+    `;
 }
 
-/* Función para mostrar productos filtrados */
-function mostrarProductosFiltrados(category) {
-    const productosFiltrados = filterProductsByCategory(products, category);
-    console.log('Productos filtrados:', productosFiltrados);
+// Obtener los elementos de filtro y productos
+const filtersContainer = document.getElementById("filters");
+const productsContainer = document.getElementById("products");
 
-    /* Lógica para mostrar los productos filtrados en la interfaz gráfica */
-    const productsContainer = document.getElementById('products');
-    productsContainer.innerHTML = ''; /* Limpiar el contenedor de productos */
+// Manejar clics en los filtros
+filtersContainer.addEventListener("click", function(event) {
+    if (event.target.classList.contains("filter")) {
+        const filter = event.target.textContent;
+        const filteredProducts = searchProductsByFilter(products, filter);
+        return showProducts(filteredProducts);
+    }
+});
 
-    productosFiltrados.forEach(product => {
-        const productDiv = document.createElement('div');
-        productDiv.classList.add('product-container');
-
-        const title = document.createElement('h3');
-        title.textContent = product.name;
-
-        const description = document.createElement('p');
-        description.textContent = product.description;
-
-        const price = document.createElement('h5');
-        price.textContent = `Precio: ${product.price} €`;
-
-        const addButton = document.createElement('button');
-        addButton.textContent = 'Añadir';
-        addButton.classList.add('add-button');
-        addButton.addEventListener('click', () => {
-           /* La lógica para agregar el producto al carrito */
-            console.log(`Añadir ${product.name} al carrito`);
-        });
-
-        productDiv.appendChild(title);
-        productDiv.appendChild(description);
-        productDiv.appendChild(price);
-        productDiv.appendChild(addButton);
-
-        productsContainer.appendChild(productDiv);
-    });
-}
-
-// Llamar a la función para mostrar los filtros al cargar la página
-mostrarFiltros();
-
-
+// Mostrar todos los productos inicialmente
+showProducts(products);
