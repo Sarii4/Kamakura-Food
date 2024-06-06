@@ -15,6 +15,4 @@ function searchProductsByFilter(products, filter) {
 };
 
 
-
-
 export { searchProductsByFilter };
