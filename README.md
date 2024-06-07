@@ -16,5 +16,5 @@ Kamakura Food es un sistema de gestión de pedidos en línea para un restaurante
 - Node.js para el servidor.
 
 Autoras
-Betty Lopez (https://github.com/BettyLopo), Lynn Poh (https://github.com/Dpoetess), Carla Sánchez (https://github.com/Carlassanchez24), Sara Terán (https://github.com/Sarii4), Belen Sánchez  y Carol Alonso (https://github.com/Calonsogon).
+Betty Lopez (https://github.com/BettyLopo), Lynn Poh (https://github.com/Dpoetess), Carla Sánchez (https://github.com/Carlassanchez24), Sara Terán (https://github.com/Sarii4), Belen Sánchez (https://github.com/Belensanchez1989) y Carol Alonso (https://github.com/Calonsogon).
 
