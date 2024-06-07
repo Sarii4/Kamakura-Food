@@ -1,3 +1,5 @@
+/*
+
 //Intenta separar los eventos en este archivo.
 import { searchProductsByFilter } from '../src/searcher.js';
 // Manejar clics en los filtros
@@ -10,3 +12,5 @@ filtersContainer.addEventListener("click", function(event) {
     }
 });
 export {filtersContainer};
+
+*/

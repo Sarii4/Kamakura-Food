@@ -4,13 +4,6 @@ import { searchProductsByFilter } from '../src/searcher.js';
 
 
 
-/*
-document.getElementById("filters").innerHTML = filters.map(showFilter);
-function showFilter(item) {
-  return [item].join(" ");
-}
-
-*/
 //DEBE imprimir en pantalla la información de filtros.
 
 document.getElementById("filters").innerHTML = filters.map(showFilter).join("");
