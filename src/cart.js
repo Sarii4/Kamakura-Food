@@ -1,13 +1,31 @@
+//DEBE contener las funcionalidades del carrito de compras.
 import { products } from '../assets/data/data.js';
+import { openReceipt } from './receipt.js';
 
 let cart = [];
 const currency = "€";
 const cartDOM = document.getElementById("cart-container");
+const productsDOM = document.getElementById("products");
 const total = document.getElementById("cart-total");
+const quantity = document.getElementById("quantity");
 const button = document.getElementById("cart");
+const buttonPay = document.getElementById("proceedPay-button");
+
+
+// click boton añadir item al carrito
+function buttonAddToCart() {
+    const addButton = document.querySelectorAll(".add-button");
+    addButton.forEach(button => {
+        button.addEventListener("click", function(event) {
+            const productId = event.target.dataset.id;
+            cartDOM.style.display = "flex";
+            addToCart(productId);
+        })
+    })
+}
 
 function toggleCart() {
-    if (cartDOM.style.display === "none") {
+    if(cartDOM.style.display === "none") {
         cartDOM.style.display = "flex";
     } else {
         cartDOM.style.display = "none";
@@ -15,53 +33,52 @@ function toggleCart() {
 }
 
 function addToCart(productId) {
-    const item = products.find(product => product.id == productId);
+    const item = products.find(product => product.id == productId );
     const existingItem = cart.find(cartItem => cartItem.id == productId);
-
-    if (existingItem) {
+    // si item ya esta en el carrito
+   if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push({ ...item, quantity: 1 });
+        cart.push({...item, quantity: 1});
     }
+    //actualiza carrito 
     updateCart();
-    openCart(); // Abrir el carrito automáticamente al agregar un producto
-}
-
-function openCart() {
-    cartDOM.style.display = "flex";
 }
 
 function updateCart() {
     const cartProducts = document.getElementById("cart-products");
-    cartProducts.innerHTML = ""; // Limpiar el contenedor antes de actualizar
-
+    cartProducts.innerHTML = ""; 
     let totalAmount = 0;
-
+    // crear nuevo elemento div para cada item del carrito
     cart.forEach(dish => {
-        const subtotal = dish.price * dish.quantity;
-        totalAmount += subtotal;
-
         const dishElement = document.createElement("div");
+        const subTotal = dish.price*dish.quantity;
+        totalAmount += subTotal;
+        // añadir nombre de clase "cart-container" al elemento
         dishElement.classList.add("cart-container");
+        // añadir info al innerHTML del nuevo elemento div
         dishElement.innerHTML = `
            <button class="close-button" data-id="${dish.id}"><img src="./assets/img/close.svg" alt="close"></button>
-           <div class="text-container">
-               <h3>${dish.name}</h3>
-               <h5>${subtotal.toFixed(2)} €</h5> <!-- Mostrar el subtotal aquí -->
-           </div>
-           <div class="quantity-container" id="quantity">
-               <button class="quantity-button" data-id="${dish.id}" data-action="increase">+</button>
-               <p class="quantity">${dish.quantity}</p>
-               <button class="quantity-button" data-id="${dish.id}" data-action="decrease">-</button>
-           </div>
-        `;
+                <div class="text-container">
+                    <h3>${dish.name}</h3>
+                    <h5>${subTotal.toFixed(2)} €</h5>
+                </div>
+                <div class="quantity-container" id="quantity">
+                    <button class="quantity-button" data-id="${dish.id}" data-action="increase">+</button>
+                    <p class="quantity">${dish.quantity}</p>
+                    <button class="quantity-button" data-id="${dish.id}" data-action="decrease">-</button>
+                </div>
+        `
         cartProducts.appendChild(dishElement);
-    });
-
-    // Mostrar el total de todos los subtotales
-    total.innerText = `Total: ${totalAmount.toFixed(2)} ${currency}`;
-
+    })
+    updateCartTotal(totalAmount);
     addEventListenersToCartButtons();
+}
+
+function updateCartTotal() {
+    const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    document.getElementById("cart-total").innerText = `Total: ${total.toFixed(2)} ${currency}`;
+    const itemSum = cart.reduce((item) => item.price * item.quantity, 0);
 }
 
 function addEventListenersToCartButtons() {
@@ -113,18 +130,35 @@ function removeFromCart(productId) {
     updateCart();
 }
 
+
 document.addEventListener("DOMContentLoaded", function() {
-    button.addEventListener('click', toggleCart);
-    updateCart();
-    buttonAddToCart();
+
+button.addEventListener('click', toggleCart);
+buttonPay.addEventListener('click', openReceipt);
+
+buttonAddToCart();
+
 });
 
-function buttonAddToCart() {
-    const addButton = document.querySelectorAll(".add-button");
-    addButton.forEach(button => {
-        button.addEventListener("click", function(event) {
-            const productId = event.target.dataset.id;
-            addToCart(productId);
-        });
-    });
-}
+const receiptContainer = document.getElementById("receipt-container");
+const receiptProductContainer = document.getElementById("receipt-product");
+const receiptTotal = document.getElementById("receipt-total");
+
+// Limpiar el contenido del contenedor del recibo antes de mostrar los nuevos productos
+receiptProductContainer.innerHTML = "";
+
+// Mostrar los productos del carrito en el recibo
+cart.forEach(item => {
+    const receiptProduct = document.createElement("div");
+    receiptProduct.classList.add("receipt-product-item");
+    receiptProduct.innerHTML = `
+        <h3>${item.name}</h3>
+        <div class="receipt-price">
+            <p>Cantidad: ${item.quantity}</p>
+            <h5>${(item.price * item.quantity).toFixed(2)} €</h5>
+        </div>
+    `;
+    receiptProductContainer.appendChild(receiptProduct);
+});
+
+
