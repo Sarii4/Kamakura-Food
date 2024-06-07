@@ -1,6 +1,4 @@
-//DEBE contener las funcionalidades del carrito de compras.
 import { products } from '../assets/data/data.js';
-import { openReceipt } from './receipt.js';
 
 let cart = [];
 const currency = "€";
@@ -10,7 +8,11 @@ const total = document.getElementById("cart-total");
 const quantity = document.getElementById("quantity");
 const button = document.getElementById("cart");
 const buttonPay = document.getElementById("proceedPay-button");
-
+const receiptContainer = document.getElementById("receipt-container");
+const receiptProducts = document.getElementById("receipt-product");
+const receiptTotal = document.getElementById("receipt-total");
+const closeReceiptButton = document.getElementById("close-receipt");
+const payButton = document.getElementById("pay-button");
 
 // click boton añadir item al carrito
 function buttonAddToCart() {
@@ -36,7 +38,7 @@ function addToCart(productId) {
     const item = products.find(product => product.id == productId );
     const existingItem = cart.find(cartItem => cartItem.id == productId);
     // si item ya esta en el carrito
-   if (existingItem) {
+    if (existingItem) {
         existingItem.quantity += 1;
     } else {
         cart.push({...item, quantity: 1});
@@ -52,7 +54,7 @@ function updateCart() {
     // crear nuevo elemento div para cada item del carrito
     cart.forEach(dish => {
         const dishElement = document.createElement("div");
-        const subTotal = dish.price*dish.quantity;
+        const subTotal = dish.price * dish.quantity;
         totalAmount += subTotal;
         // añadir nombre de clase "cart-container" al elemento
         dishElement.classList.add("cart-container");
@@ -75,10 +77,8 @@ function updateCart() {
     addEventListenersToCartButtons();
 }
 
-function updateCartTotal() {
-    const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    document.getElementById("cart-total").innerText = `Total: ${total.toFixed(2)} ${currency}`;
-    const itemSum = cart.reduce((item) => item.price * item.quantity, 0);
+function updateCartTotal(totalAmount) {
+    document.getElementById("cart-total").innerText = `Total: ${totalAmount.toFixed(2)} ${currency}`;
 }
 
 function addEventListenersToCartButtons() {
@@ -130,35 +130,46 @@ function removeFromCart(productId) {
     updateCart();
 }
 
+function openReceipt() {
+    receiptContainer.style.display = "block";
+    cartDOM.style.display = "none"; // Esconder solo el carrito
+    updateReceipt();
+}
+
+function closeReceipt() {
+    receiptContainer.style.display = "none";
+    cartDOM.style.display = "flex"; // Mostrar el carrito de nuevo
+}
+
+function updateReceipt() {
+    receiptProducts.innerHTML = ""; 
+    let totalAmount = 0;
+    // crear nuevo elemento div para cada item del carrito
+    cart.forEach(dish => {
+        const dishElement = document.createElement("div");
+        const subTotal = dish.price * dish.quantity;
+        totalAmount += subTotal;
+        // añadir nombre de clase "receipt-product" al elemento
+        dishElement.classList.add("receipt-product");
+        // añadir info al innerHTML del nuevo elemento div
+        dishElement.innerHTML = `
+            <h3>${dish.name}</h3>
+            <div class="receipt-price">
+                <p>Cantidad: ${dish.quantity}</p>
+                <h5>${subTotal.toFixed(2)} €</h5>
+            </div>
+        `
+        receiptProducts.appendChild(dishElement);
+    })
+    receiptTotal.innerText = `Total: ${totalAmount.toFixed(2)} ${currency}`;
+}
 
 document.addEventListener("DOMContentLoaded", function() {
+    button.addEventListener('click', toggleCart);
+    buttonPay.addEventListener('click', openReceipt);
+    closeReceiptButton.addEventListener('click', closeReceipt);
 
-button.addEventListener('click', toggleCart);
-buttonPay.addEventListener('click', openReceipt);
-
-buttonAddToCart();
-
+    buttonAddToCart();
 });
 
-const receiptContainer = document.getElementById("receipt-container");
-const receiptProductContainer = document.getElementById("receipt-product");
-const receiptTotal = document.getElementById("receipt-total");
-
-// Limpiar el contenido del contenedor del recibo antes de mostrar los nuevos productos
-receiptProductContainer.innerHTML = "";
-
-// Mostrar los productos del carrito en el recibo
-cart.forEach(item => {
-    const receiptProduct = document.createElement("div");
-    receiptProduct.classList.add("receipt-product-item");
-    receiptProduct.innerHTML = `
-        <h3>${item.name}</h3>
-        <div class="receipt-price">
-            <p>Cantidad: ${item.quantity}</p>
-            <h5>${(item.price * item.quantity).toFixed(2)} €</h5>
-        </div>
-    `;
-    receiptProductContainer.appendChild(receiptProduct);
-});
-
-
+export { updateCart };
