@@ -130,16 +130,16 @@ function removeFromCart(productId) {
     updateCart();
 }
 
+
+const productsContainer = document.getElementById("products-container");
+
 function openReceipt() {
-    receiptContainer.style.display = "block";
-    cartDOM.style.display = "none"; // Esconder solo el carrito
-    updateReceipt();
+  console.log("Proceder al pago haciendo clic...");
+  productsContainer.style.display = "none";
+  receiptContainer.style.display = "flex";
+  updateReceipt(cart); // Pasa los elementos del carrito a la función updateReceipt
 }
 
-function closeReceipt() {
-    receiptContainer.style.display = "none";
-    cartDOM.style.display = "flex"; // Mostrar el carrito de nuevo
-}
 
 function updateReceipt() {
     receiptProducts.innerHTML = ""; 
@@ -167,9 +167,17 @@ function updateReceipt() {
 document.addEventListener("DOMContentLoaded", function() {
     button.addEventListener('click', toggleCart);
     buttonPay.addEventListener('click', openReceipt);
-    closeReceiptButton.addEventListener('click', closeReceipt);
+    
 
     buttonAddToCart();
 });
 
+
+function showPopup() {
+    alert("¡Gracias por tu compra!");
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    payButton.addEventListener('click', showPopup);
+});
 export { updateCart };
