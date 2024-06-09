@@ -164,14 +164,17 @@ function updateReceipt() {
     receiptTotal.innerText = `Total: ${totalAmount.toFixed(2)} ${currency}`;
 }
 
+function closeReceipt() {
+    receiptContainer.style.display = "none";
+    productsContainer.style.display = "flex"; 
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     button.addEventListener('click', toggleCart);
     buttonPay.addEventListener('click', openReceipt);
-    
-
+    closeReceiptButton.addEventListener('click', closeReceipt);
     buttonAddToCart();
 });
-
 
 function showPopup() {
     alert("¡Gracias por tu compra!");
