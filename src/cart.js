@@ -180,10 +180,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function showPopup() {
-    // Create the dialog element
     var dialogGracias = document.createElement("dialog");
-
-    // Style the dialog for a larger size
     dialogGracias.style.width = "400px";
     dialogGracias.style.height = "200px";
     dialogGracias.style.padding = "20px";
@@ -197,7 +194,6 @@ function showPopup() {
     dialogGracias.style.justifyContent = "center";
     dialogGracias.style.overflow = "hidden"; 
 
-    // Create and style the text
     var graciasText = document.createElement("div");
     graciasText.innerHTML = `
         <p><b>Gracias por tu Compra</b></p>
@@ -206,7 +202,6 @@ function showPopup() {
     `;
     dialogGracias.appendChild(graciasText);
 
-    // Create the close button
     var closeButton = document.createElement("button");
     closeButton.className = "close-button";
     var closeButtonImage = document.createElement("img");
@@ -218,20 +213,14 @@ function showPopup() {
     closeButton.style.zIndex = "105";
 
     closeButton.appendChild(closeButtonImage);
-    
-    // Append the close button to the dialog
     dialogGracias.appendChild(closeButton);
-
-    // Append the dialog to the body
     document.body.appendChild(dialogGracias);
 
-    // Add event listener to close the dialog
     closeButton.addEventListener("click", function() {
         dialogGracias.close();
-        document.body.removeChild(dialogGracias); // Remove the dialog from the DOM
+        document.body.removeChild(dialogGracias);
     });
-
-    // Show the dialog
+    
     dialogGracias.showModal();
 }
 
