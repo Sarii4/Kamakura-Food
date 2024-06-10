@@ -3,10 +3,7 @@ import { products } from '../assets/data/data.js';
 let cart = [];
 const currency = "€";
 const cartDOM = document.getElementById("cart-container");
-const productsDOM = document.getElementById("products");
-const total = document.getElementById("cart-total");
-const quantity = document.getElementById("quantity");
-const button = document.getElementById("cart");
+const buttonCart = document.getElementById("cart");
 const buttonPay = document.getElementById("proceedPay-button");
 const receiptContainer = document.getElementById("receipt-container");
 const receiptProducts = document.getElementById("receipt-product");
@@ -170,7 +167,7 @@ function closeReceipt() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    button.addEventListener('click', toggleCart);
+    buttonCart.addEventListener('click', toggleCart);
     buttonPay.addEventListener('click', openReceipt);
     closeReceiptButton.addEventListener('click', closeReceipt);
 });
@@ -189,7 +186,7 @@ function showPopup() {
         return;
     }
 
-    var dialogGracias = document.createElement("dialog");
+    const dialogGracias = document.createElement("dialog");
     dialogGracias.style.width = "400px";
     dialogGracias.style.height = "200px";
     dialogGracias.style.padding = "20px";
@@ -203,17 +200,17 @@ function showPopup() {
     dialogGracias.style.justifyContent = "center";
     dialogGracias.style.overflow = "hidden"; 
 
-    var graciasText = document.createElement("div");
+    const graciasText = document.createElement("div");
     graciasText.innerHTML = `
         <p><b>Gracias por tu Compra</b></p>
-        <p>¡Pedido realizado con éxito, gracias por comprar en Kamura Food!</p>
+        <p>¡Pedido realizado con éxito, gracias por comprar en Kamakura Food!</p>
         <img class="image-logo" src="./assets/img/logo.svg" alt="restaurant logo">
     `;
     dialogGracias.appendChild(graciasText);
 
-    var closeButton = document.createElement("button");
+    const closeButton = document.createElement("button");
     closeButton.className = "close-button";
-    var closeButtonImage = document.createElement("img");
+    const closeButtonImage = document.createElement("img");
     closeButtonImage.src = "./assets/img/close.svg";
     closeButtonImage.alt = "close";
     closeButton.style.position = "absolute";
