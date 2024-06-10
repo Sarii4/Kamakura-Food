@@ -14,7 +14,7 @@ const receiptTotal = document.getElementById("receipt-total");
 const closeReceiptButton = document.getElementById("close-receipt");
 const payButton = document.getElementById("pay-button");
 
-
+// ------------funciones carrito------------------------
 function toggleCart() {
     if(cartDOM.style.display === "none") {
         cartDOM.style.display = "flex";
@@ -123,21 +123,29 @@ function removeFromCart(productId) {
 }
 
 
+// ------------funciones recibo------------------------
+
 const productsContainer = document.getElementById("products-container");
 
 function openReceipt() {
-  console.log("Proceder al pago haciendo clic...");
-  productsContainer.style.display = "none";
-  receiptContainer.style.display = "flex";
-  updateReceipt(cart); // Pasa los elementos del carrito a la función updateReceipt
+  //console.log("Proceder al pago haciendo clic...");
+    productsContainer.style.display = "none";
+    receiptContainer.style.display = "flex";
+    updateReceipt(cart); // Pasa los elementos del carrito a la función updateReceipt
 }
-
 
 function updateReceipt() {
     receiptProducts.innerHTML = ""; 
     let totalAmount = 0;
+    const dishElement = document.createElement("div");
+    
+    if (cart.length == 0) { dishElement.innerHTML = `
+        <h3>Aún no has escogido tu orden</h3>
+    ` 
+    receiptProducts.appendChild(dishElement);
+    } else {
     // crear nuevo elemento div para cada item del carrito
-    cart.forEach(dish => {
+        cart.forEach(dish => {
         const dishElement = document.createElement("div");
         const subTotal = dish.price * dish.quantity;
         totalAmount += subTotal;
@@ -152,7 +160,8 @@ function updateReceipt() {
             </div>
         `
         receiptProducts.appendChild(dishElement);
-    })
+        });
+    }
     receiptTotal.innerText = `Total: ${totalAmount.toFixed(2)} ${currency}`;
 }
 
@@ -167,6 +176,8 @@ document.addEventListener("DOMContentLoaded", function() {
     closeReceiptButton.addEventListener('click', closeReceipt);
     buttonAddToCart();
 });
+
+// ------------funcion popup------------------------
 
 function showPopup() {
     var dialogGracias = document.createElement("dialog");
