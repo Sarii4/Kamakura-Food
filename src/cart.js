@@ -14,17 +14,6 @@ const receiptTotal = document.getElementById("receipt-total");
 const closeReceiptButton = document.getElementById("close-receipt");
 const payButton = document.getElementById("pay-button");
 
-// click boton añadir item al carrito
-function buttonAddToCart() {
-    const addButton = document.querySelectorAll(".add-button");
-    addButton.forEach(button => {
-        button.addEventListener("click", function(event) {
-            const productId = event.target.dataset.id;
-            cartDOM.style.display = "flex";
-            addToCart(productId);
-        })
-    })
-}
 
 function toggleCart() {
     if(cartDOM.style.display === "none") {

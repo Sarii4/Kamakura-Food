@@ -36,6 +36,7 @@ function showProduct(product) {
     `;
 }
 
+const cartDOM = document.getElementById("cart-container");
 function attachAddToCartListeners(filteredCategory) {
   const addToCartButtons = document.querySelectorAll(".add-button");
   addToCartButtons.forEach(button => {
@@ -47,6 +48,7 @@ function attachAddToCartListeners(filteredCategory) {
           if (filteredCategory !== "todos") {
             console.log("adding to cart");
             addToCart(filteredProdId);
+            cartDOM.style.display = "flex";
         }  
       });
   });
