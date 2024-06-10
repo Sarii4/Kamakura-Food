@@ -128,7 +128,6 @@ function removeFromCart(productId) {
 const productsContainer = document.getElementById("products-container");
 
 function openReceipt() {
-  //console.log("Proceder al pago haciendo clic...");
     productsContainer.style.display = "none";
     receiptContainer.style.display = "flex";
     updateReceipt(cart); // Pasa los elementos del carrito a la función updateReceipt
@@ -174,12 +173,22 @@ document.addEventListener("DOMContentLoaded", function() {
     button.addEventListener('click', toggleCart);
     buttonPay.addEventListener('click', openReceipt);
     closeReceiptButton.addEventListener('click', closeReceipt);
-    buttonAddToCart();
 });
 
 // ------------funcion popup------------------------
 
 function showPopup() {
+    if (cart.length === 0) {
+        const emptyCartMessage = document.createElement("p");
+        emptyCartMessage.textContent = "Tu orden está vacía.";
+        emptyCartMessage.style.color = "red";
+        emptyCartMessage.style.position = "absolute";
+        emptyCartMessage.style.bottom = "10px";
+        emptyCartMessage.style.left = "10px";
+        receiptProducts.appendChild(emptyCartMessage);
+        return;
+    }
+
     var dialogGracias = document.createElement("dialog");
     dialogGracias.style.width = "400px";
     dialogGracias.style.height = "200px";
@@ -187,7 +196,7 @@ function showPopup() {
     dialogGracias.style.border = "none";
     dialogGracias.style.position = "relative";
     dialogGracias.style.zIndex = "99";
-    dialogGracias.style.textAlign = "center"; // Center align text and content
+    dialogGracias.style.textAlign = "center"; 
     dialogGracias.style.display = "flex";
     dialogGracias.style.flexDirection = "column";
     dialogGracias.style.alignItems = "center";

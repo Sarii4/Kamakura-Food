@@ -3,17 +3,10 @@ import { products } from '../assets/data/data.js';
 import { searchProductsByFilter } from '../src/searcher.js';
 import { addToCart } from '../src/cart.js';
 
-
-//DEBE imprimir en pantalla la información de filtros.
-
 document.getElementById("filters").innerHTML = filters.map(showFilter).join("");
 
 function showFilter(item) {
   return `<button class= "filter">${item}</button>`;}
-
-
-
-//DEBE imprimir en pantalla los productos, con su Título, descripción y precio en € y botón de añadir.
 
   // Función para mostrar los productos en pantalla
 function showProducts(products) {
@@ -36,8 +29,8 @@ function showProduct(product) {
     `;
 }
 
-const cartDOM = document.getElementById("cart-container");
 function attachAddToCartListeners(filteredCategory) {
+  const cartDOM = document.getElementById("cart-container");
   const addToCartButtons = document.querySelectorAll(".add-button");
   addToCartButtons.forEach(button => {
       button.addEventListener("click", function(event) {
