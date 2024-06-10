@@ -1,7 +1,7 @@
 import { filters } from '../assets/data/data.js';
 import { products } from '../assets/data/data.js';
 import { searchProductsByFilter } from '../src/searcher.js';
-
+import { addToCart } from '../src/cart.js';
 
 
 //DEBE imprimir en pantalla la información de filtros.
@@ -19,6 +19,7 @@ function showFilter(item) {
 function showProducts(products) {
     const productsContainer = document.getElementById("products");
     productsContainer.innerHTML = products.map(showProduct).join("");
+    attachAddToCartListeners();
 }
 
 // Función para mostrar un producto individual en una cuadrícula
@@ -34,6 +35,22 @@ function showProduct(product) {
         </div>
     `;
 }
+
+function attachAddToCartListeners(filteredCategory) {
+    const addToCartButtons = document.querySelectorAll(".add-button");
+    addToCartButtons.forEach(button => {
+        button.addEventListener("click", function(event) {
+            console.log("añadir button clicked");
+            const filteredProdId = event.target.getAttribute("data-id");
+            const productToAdd = products.find(product => product.id == filteredProdId);
+  
+            if (filteredCategory !== "todos") {
+              console.log("adding to cart");
+              addToCart(filteredProdId);
+          }  
+        });
+    });
+  }
 
 // Obtener los elementos de filtro y productos
 const filtersContainer = document.getElementById("filters");
