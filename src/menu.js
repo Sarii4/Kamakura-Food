@@ -37,20 +37,20 @@ function showProduct(product) {
 }
 
 function attachAddToCartListeners(filteredCategory) {
-    const addToCartButtons = document.querySelectorAll(".add-button");
-    addToCartButtons.forEach(button => {
-        button.addEventListener("click", function(event) {
-            console.log("añadir button clicked");
-            const filteredProdId = event.target.getAttribute("data-id");
-            const productToAdd = products.find(product => product.id == filteredProdId);
-  
-            if (filteredCategory !== "todos") {
-              console.log("adding to cart");
-              addToCart(filteredProdId);
-          }  
-        });
-    });
-  }
+  const addToCartButtons = document.querySelectorAll(".add-button");
+  addToCartButtons.forEach(button => {
+      button.addEventListener("click", function(event) {
+          console.log("añadir button clicked");
+          const filteredProdId = event.target.getAttribute("data-id");
+          const productToAdd = products.find(product => product.id == filteredProdId);
+
+          if (filteredCategory !== "todos") {
+            console.log("adding to cart");
+            addToCart(filteredProdId);
+        }  
+      });
+  });
+}
 
 // Obtener los elementos de filtro y productos
 const filtersContainer = document.getElementById("filters");

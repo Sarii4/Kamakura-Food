@@ -35,13 +35,16 @@ function toggleCart() {
 }
 
 function addToCart(productId) {
+    console.log("addToCart called");
     const item = products.find(product => product.id == productId );
     const existingItem = cart.find(cartItem => cartItem.id == productId);
     // si item ya esta en el carrito
     if (existingItem) {
-        existingItem.quantity += 1;
+        existingItem.quantity ++;
+        console.log("existingItem.quantity incremented");
     } else {
         cart.push({...item, quantity: 1});
+        console.log("new item added to cart");
     }
     //actualiza carrito 
     updateCart();
@@ -183,4 +186,4 @@ function showPopup() {
 document.addEventListener("DOMContentLoaded", function() {
     payButton.addEventListener('click', showPopup);
 });
-export { updateCart };
+export { addToCart, updateCart };
