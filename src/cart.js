@@ -180,10 +180,63 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function showPopup() {
-    alert("¡Gracias por tu compra!");
+    // Create the dialog element
+    var dialogGracias = document.createElement("dialog");
+
+    // Style the dialog for a larger size
+    dialogGracias.style.width = "400px";
+    dialogGracias.style.height = "200px";
+    dialogGracias.style.padding = "20px";
+    dialogGracias.style.border = "none";
+    dialogGracias.style.position = "relative";
+    dialogGracias.style.zIndex = "99";
+    dialogGracias.style.textAlign = "center"; // Center align text and content
+    dialogGracias.style.display = "flex";
+    dialogGracias.style.flexDirection = "column";
+    dialogGracias.style.alignItems = "center";
+    dialogGracias.style.justifyContent = "center";
+    dialogGracias.style.overflow = "hidden"; 
+
+    // Create and style the text
+    var graciasText = document.createElement("div");
+    graciasText.innerHTML = `
+        <p><b>Gracias por tu Compra</b></p>
+        <p>¡Pedido realizado con éxito, gracias por comprar en Kamura Food!</p>
+        <img class="image-logo" src="./assets/img/logo.svg" alt="restaurant logo">
+    `;
+    dialogGracias.appendChild(graciasText);
+
+    // Create the close button
+    var closeButton = document.createElement("button");
+    closeButton.className = "close-button";
+    var closeButtonImage = document.createElement("img");
+    closeButtonImage.src = "./assets/img/close.svg";
+    closeButtonImage.alt = "close";
+    closeButton.style.position = "absolute";
+    closeButton.style.top = "0";
+    closeButton.style.right = "0";
+    closeButton.style.zIndex = "105";
+
+    closeButton.appendChild(closeButtonImage);
+    
+    // Append the close button to the dialog
+    dialogGracias.appendChild(closeButton);
+
+    // Append the dialog to the body
+    document.body.appendChild(dialogGracias);
+
+    // Add event listener to close the dialog
+    closeButton.addEventListener("click", function() {
+        dialogGracias.close();
+        document.body.removeChild(dialogGracias); // Remove the dialog from the DOM
+    });
+
+    // Show the dialog
+    dialogGracias.showModal();
 }
 
 document.addEventListener("DOMContentLoaded", function() {
     payButton.addEventListener('click', showPopup);
 });
+
 export { addToCart, updateCart };
