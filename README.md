@@ -18,3 +18,4 @@ Kamakura Food es un sistema de gestión de pedidos en línea para un restaurante
 Autoras
 Betty Lopez (https://github.com/BettyLopo), Lynn Poh (https://github.com/Dpoetess), Carla Sánchez (https://github.com/Carlassanchez24), Sara Terán (https://github.com/Sarii4), Belen Sánchez (https://github.com/Belensanchez1989) y Carol Alonso (https://github.com/Calonsogon).
 
+![image](https://github.com/Sarii4/Kamakura-Food/assets/169152920/b35fbb12-b63b-42d2-b16b-36fe29bbb6c9)
